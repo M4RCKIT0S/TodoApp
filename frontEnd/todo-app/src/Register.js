@@ -45,6 +45,10 @@ export const Register = () => {
         setShowModal(true)
         console.log(error.response);
       });
+    }else{
+      setIsValidEmail(validateEmail(user.email))
+      setIsValidName(validateUsername(user.name))
+      setIsValidUsername(validateUsername(user.username))
     }
   }
   const handleChange = (e)=>{
@@ -68,8 +72,9 @@ export const Register = () => {
     setShowModal(false);
   }
   const conditionalRendering = ()=>{
+    const msg = 'Please check fields, email or username is already in use.';
     if(showModal)
-     return <NotGoodRequest onClick={handleModalClick}/>
+     return <NotGoodRequest onClick={handleModalClick} msg={msg}/>
   }
     return (
       <div className="flex flex-row-reverse min-h-full   bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500">
@@ -103,7 +108,7 @@ export const Register = () => {
       </div>
     );
 }
-const Input = ({name,onChange, label_name, placeholder, value, type, show})=>{
+export const Input = ({name,onChange, label_name, placeholder, value, type, show})=>{
   const [isClicked, setIsClicked] = useState(false);
   
   let input = useRef(null)

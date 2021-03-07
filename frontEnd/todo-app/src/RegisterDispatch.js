@@ -50,7 +50,7 @@ const Span = ({message, icon, color})=>{
         </>
     )
 }
-export const NotGoodRequest = ({onClick})=>{
+export const NotGoodRequest = ({onClick, msg})=>{
     
     return (
         <div className="mx-5 my-5 bg-red-300 bg-opacity-75 rounded flex flex-row-reverse items-center shadow-md">
@@ -60,7 +60,7 @@ export const NotGoodRequest = ({onClick})=>{
             </svg>
             </div>
             <div className='flex-grow my-3 mx-3'>
-            <p className="w-full">Please check fields, email or username is already in use.</p>
+            <p className="w-full">{msg}</p>
             </div>
         </div>
     )
