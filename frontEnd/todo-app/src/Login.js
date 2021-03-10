@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom'
 import logo from './logo.png'
 import { Input } from './Register'
 import { NotGoodRequest } from './RegisterDispatch'
-import UserContext from './UserDispatch'
+import  { UserContext } from './UserDispatch'
 
 //Regex
 function validateUsername(username){
@@ -15,6 +15,7 @@ export const Login = (props) => {
   const [userValue, setUser] = useState({username:'', password:''})
   const [isValidUsername , setIsValidUsername] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [user, dispatch] = useContext(UserContext)
 
   const handleSubmit = (e)=>{
     e.preventDefault()
@@ -28,10 +29,10 @@ export const Login = (props) => {
       }).then((res)=>{
         let {data} = res;
         localStorage.setItem('token_id', data.token);
-        //dispatch({type: 'login', text: data})
+        dispatch({type: 'login', text: data})
         console.log(localStorage)
         setShowModal(false);
-        <Redirect to={'/dashboard'}/>
+        window.location.href='/dashboard'
       }
       ).catch((error)=>{
         setShowModal(true)

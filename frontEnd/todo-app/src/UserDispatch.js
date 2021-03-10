@@ -1,9 +1,8 @@
 import React, { useEffect, useReducer } from 'react'
-import { User } from './Icons/HeroIcons'
 
-export const Context = React.createContext()
+export const UserContext = React.createContext()
 
-const UserContext = (props)=>{
+const UserReducer = (props)=>{
     const initialState = {
         token: null,
     }
@@ -18,13 +17,13 @@ const UserContext = (props)=>{
      useEffect(()=>{
          const myItem = localStorage.getItem('token_id');
          if(myItem!== null){
-             //dispatch({type:'login', text: JSON.parse(myItem)})
+             dispatch({type:'login', text: myItem})
          }else{
              localStorage.clear()
          }
      },[])
-    return (<Context.Provider value={[user, dispatch]}>{props.children}</Context.Provider>)
+    return (<UserContext.Provider value={[user, dispatch]}>{props.children}</UserContext.Provider>)
 }
 
 
-export default UserContext
+export default UserReducer

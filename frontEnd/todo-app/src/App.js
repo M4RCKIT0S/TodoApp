@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 import { Register } from './Register';
 import { Login } from './Login'
 import { Switch , BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import UserContext from './UserDispatch'
+import UserReducer, { UserContext } from './UserDispatch'
 import { Dashboard } from './Dashboard';
+import { HomeNavbar } from './HomeNavbar';
 
 export const App = (props) => {
+    const [user, setUser] = useContext(UserContext)
     const PrivateRoute = ({component: Component, ...rest})=>{
         const isAuth = localStorage.getItem('token_id')
         console.log(isAuth)
@@ -29,7 +31,10 @@ export const App = (props) => {
         <div className="h-screen">
             <Router>
             <Switch>
-                <UserContext>
+                <UserReducer>
+                <Route exact path='/home'>
+                    <HomeNavbar/>
+                </Route>
                 <Route exact path='/SignUp'>
                     <Register/>
                 </Route>
@@ -37,7 +42,7 @@ export const App = (props) => {
                     <Login/>
                 </Route>
                 <PrivateRoute path='/dashboard' component={Dashboard}/>
-                </UserContext>
+                </UserReducer>
             </Switch>
             </Router>
         </div>
