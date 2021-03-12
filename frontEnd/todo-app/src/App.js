@@ -5,6 +5,7 @@ import { Switch , BrowserRouter as Router, Route, Redirect} from 'react-router-d
 import UserReducer, { UserContext } from './UserDispatch'
 import { Dashboard } from './Dashboard';
 import { HomeNavbar } from './HomeNavbar';
+import { SpinnerLoading } from './Icons/SpinnerLoading';
 
 export const App = (props) => {
     const [user, setUser] = useContext(UserContext)

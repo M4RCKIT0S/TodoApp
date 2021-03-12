@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
+import { SpinnerLoading } from './Icons/SpinnerLoading'
 import logo from './logo.png'
 import { Input } from './Register'
 import { NotGoodRequest } from './RegisterDispatch'
@@ -16,6 +17,7 @@ export const Login = (props) => {
   const [isValidUsername , setIsValidUsername] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [user, dispatch] = useContext(UserContext)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const handleSubmit = (e)=>{
     e.preventDefault()
@@ -28,13 +30,17 @@ export const Login = (props) => {
         }
       }).then((res)=>{
         let {data} = res;
-        localStorage.setItem('token_id', data.token);
-        dispatch({type: 'login', text: data})
+         setLoggedIn(true);
+        setTimeout(()=>{
+          localStorage.setItem('token_id', data.token);
+          dispatch({type: 'login', text: data})
+          setShowModal(false);
+          window.location.href='/dashboard'
+        },500)
         console.log(localStorage)
-        setShowModal(false);
-        window.location.href='/dashboard'
       }
       ).catch((error)=>{
+        setLoggedIn(false)
         setShowModal(true)
       })
     }
@@ -52,8 +58,7 @@ export const Login = (props) => {
     e.preventDefault();
     setShowModal(!showModal)
   }
-
-
+  if(loggedIn) return <SpinnerLoading/>
 
     return (
         <div className="flex flex-row-reverse min-h-full   bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500">  
